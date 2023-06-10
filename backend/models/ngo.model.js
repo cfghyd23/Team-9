@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ngoSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -11,10 +11,11 @@ const ngoSchema = new mongoose.Schema({
     address: { type: String },
     city: { type: String },
     state: { type: String },
+    zipcode: { type: Number },
   },
   website: { type: String },
 });
 
-const NGO = mongoose.model('NGO', ngoSchema);
+const NGO = mongoose.model("NGO", ngoSchema);
 
 module.exports = NGO;
