@@ -9,6 +9,7 @@ const donorSchema = new mongoose.Schema({
   contact: { type: Number, required: true },
   address: { type: String, required: true },
   zipcode: { type: Number, required: true },
+
   // donationHistory: [
   //   { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
   // ],
