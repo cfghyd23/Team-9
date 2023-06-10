@@ -1,4 +1,5 @@
 const userModel = require("../models/donor.model.js");
+const bloodBankModel = require("../models/bloodBankModel.js");
 
 const registerController = async (req, res) => {
   try {
@@ -81,23 +82,26 @@ const loginController = async (req, res) => {
     //check user
     const user = await users.findOne({ uid });
     if (user) {
-      return res.status(400).send({
+      return res.status(200).send({
         message: "User exists",
         success: true,
       });
+    } else {
+      const banks = bloodBankModel;
+      //check user
+      const bank = await banks.findOne({ uid });
+      if (bank) {
+        return res.status(200).send({
+          message: "Hospital/Blood Bank exists",
+          success: true,
+        });
+      } else {
+        return res.status(200).send({
+          message: "User does not exist",
+          success: false,
+        });
+      }
     }
-
-    res.status(200).send({
-      message: "User logged in successfully",
-      success: true,
-      user: {
-        uid: user.uid,
-        fname: user.fname,
-        lname: user.lname,
-        contact: user.contact,
-        address: user.address,
-      },
-    });
   } catch (err) {
     console.log(`Error: ${err.message}`);
     res.status(500).send({
