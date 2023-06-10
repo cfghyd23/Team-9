@@ -8,6 +8,8 @@ const {
   bloodBankController,
 } = require("../controllers/bloodBankController.js");
 
+const { searchBloodBank } = require("../controllers/searchBloodBank.js");
+
 const { ngoController } = require("../controllers/ngoController.js");
 
 //router object
@@ -22,6 +24,9 @@ router.post("/login", loginController);
 
 //find donors
 router.post("/getDonor", donorController);
+
+//find blood bank with the blood Type and the quantity required
+router.post("/bankSearch", searchBloodBank);
 
 //create blood banks (only admin can do this)
 router.post("/createBloodBank", bloodBankController);
