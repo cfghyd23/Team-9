@@ -1,4 +1,4 @@
-const bloodBankModel = require("../models/bloodBankModel");
+ const bloodBankModel = require("../models/bloodBankModel");
 
 const bloodBankController = async (req, res) => {
   try {
