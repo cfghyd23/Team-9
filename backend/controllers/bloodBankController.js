@@ -2,7 +2,7 @@ const bloodBankModel = require("../models/bloodBankModel");
 
 const bloodBankController = async (req, res) => {
   try {
-    var { name, location, contactInfo, storageCapacity, InventoryStatus } =
+    var { name, location, contactInfo, storageCapacity, inventoryStatus } =
       req.body;
     //validations
     if (
@@ -10,7 +10,7 @@ const bloodBankController = async (req, res) => {
       !location ||
       !contactInfo ||
       !storageCapacity ||
-      !InventoryStatus
+      !inventoryStatus
     ) {
       console.log(req.body);
       return res.status(400).send({
@@ -24,9 +24,10 @@ const bloodBankController = async (req, res) => {
       location,
       contactInfo,
       storageCapacity,
-      InventoryStatus,
+      inventoryStatus,
     });
 
+    console.log(bloodBank);
     return res.status(200).send({
       message: "Hospital registered successfully",
       success: true,

@@ -9,7 +9,7 @@ const bloodBankSchema = new mongoose.Schema({
     zipcode: { type: Number, required: true },
   },
   contactInfo: {
-    phone: { type: String, required: true },
+    phone: { type: Number, required: true },
     email: { type: String, required: true },
   },
   storageCapacity: { type: Number },

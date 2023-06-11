@@ -10,12 +10,12 @@ const donorSchema = new mongoose.Schema({
   address: { type: String, required: true },
   zipcode: { type: Number, required: true },
 
-  // donationHistory: [
-  //   { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
-  // ],
-  // availability: [{ type: Boolean }],
-  // healthInfo: { type: String },
-  // consentInfo: { type: String },
+  donationHistory: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
+  ],
+  availability: { type: Boolean },
+  healthInfo: { type: String },
+  consentInfo: { type: String },
 });
 
 const Donor = mongoose.model("Donor", donorSchema);

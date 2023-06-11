@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors");
+
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes.js");
 const env = require("dotenv");
@@ -7,13 +7,21 @@ const env = require("dotenv");
 require("dotenv").config();
 
 const app = express(); // create express server
-const port = process.env.PORT || 5000; // port server is running on
+const port = process.env.PORT || 5002; // port server is running on
 
-app.use(cors()); // cors middleware
+const cors = require('cors');
+const corsOptions ={
+    origin:'*', 
+    credentials:true,   
+           //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions)); // cors middleware
 app.use(express.json()); // body parser middleware
 
 const uri = process.env.ATLAS_URI; // database uri
 mongoose.connect(uri, {
+
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }); // connect to database

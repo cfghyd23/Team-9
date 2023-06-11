@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import {
   MDBIcon
 }
 from 'mdb-react-ui-kit';
+import axios from 'axios';
 
 
 export default function Login() {
@@ -38,6 +39,7 @@ export default function Login() {
     
     //auth.currentUser
     const provider = new GoogleAuthProvider();
+
     
     
      const signInWithGoogle = () => {
@@ -45,9 +47,28 @@ export default function Login() {
        
       signInWithPopup(auth, provider)
         .then((result) => {
+          console.log(result);
+          if(result.user.uid==="ttZWxqgzAwhtU2zFnf8SyiykMcb2"){
+          
+            localStorage.setItem("uType",2);
+            navigate('/adminHome');
+     
+          }
+          else  if(result.user.uid=="5KFoXSirQLaeZyOUQl42VrU23OK2"){
+          
+            localStorage.setItem("uType",1);
+            localStorage.setItem("hUID",1);
+            navigate('/hosAdmin');
+     
+          }
+           else{
+            getUser();
+            navigate('/register',{state:{id:1,uid:auth.currentUser.uid}});
+  
+           }
+          // navigate('/register',{state:{id:1,uid:auth.currentUser.uid}});
            
-            navigate('/register',{state:{id:1,uid:result.user.uid}});
-        })
+            })
         .catch((error) => {
           console.log(error);
         });
@@ -61,13 +82,51 @@ export default function Login() {
 const user = auth.currentUser;
         
         if(user){
-            navigate('/register',{state:{id:1,uid:auth.currentUser.uid}});
-        }
+
+          axios.post("http://localhost:5002/api/login", {
+            uid: auth.currentUser.uid,
+        
+      
+           },
+           {headers:{
+      
+           
+            "Access-Control-Allow-Origin":"*",
+          } }
+           )
+           .then(function (response) {
+             console.log("shcgsahj");
+             if(response.status ==200){
+              navigate("/home");
+             }
+             else  if(user.uid=="ttZWxqgzAwhtU2zFnf8SyiykMcb2"){
+          
+              localStorage.setItem("uType",2);
+              navigate('/adminHome');
+       
+            }
+            else  if(user.uid=="5KFoXSirQLaeZyOUQl42VrU23OK2"){
+          
+              localStorage.setItem("uType",1);
+              localStorage.setItem("hUID",1);
+              navigate('/hosAdmin');
+       
+            }
+             else{
+              navigate('/register',{state:{id:1,uid:auth.currentUser.uid}});
+    
+             }
+           })
+           .catch(function (error) {
+             console.log(error);
+           });
+
+    }
     }
     
     useEffect(()=>{
-        getUser();
-    })
+       
+    });
       const signOutG=()=>{
     
         
@@ -95,15 +154,14 @@ const user = auth.currentUser;
         <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
 
           <h1 className="my-5 display-3 fw-bold ls-tight px-3">
-            The best offer <br />
-            <span className="text-primary">for your business</span>
+            Welcome Back <br />
+            <span className="text-primary">to Blood Donor</span>
           </h1>
 
           <p className='px-3' style={{color: 'hsl(217, 10%, 50.8%)'}}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-            quibusdam tempora at cupiditate quis eum maiores libero
-            veritatis? Dicta facilis sint aliquid ipsum atque?
+          Join us in saving lives through blood donation
+
+Every drop of blood makes a difference
           </p>
 
         </MDBCol>
